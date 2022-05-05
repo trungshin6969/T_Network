@@ -73,3 +73,18 @@ export const paginatedResult = (model) => {
     }
   };
 };
+
+export const commentAuthorization = (req, res, next) => {
+  verifyToken(req, res, () => {
+    console.log("req.user.id: " + req.user.id);
+    console.log("postUserId: :" + req.body.postUserId);
+    if (
+      req.user.id === req.body.postUserId ||
+      req.user.id === req.body.postId
+    ) {
+      next();
+    } else {
+      return res.status(403).json("You're not allowed to do that!");
+    }
+  });
+};

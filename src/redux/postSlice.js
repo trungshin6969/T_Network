@@ -43,6 +43,10 @@ export const postSlice = createSlice({
         ...new Set([...state.allPosts.posts, ...action.payload]),
       ];
     },
+    getAllPostFailed: (state) => {
+      state.allPosts.pending = false;
+      state.allPosts.error = true;
+    },
     getOnePostStart: (state) => {
       state.onePost.pending = true;
     },
@@ -51,28 +55,6 @@ export const postSlice = createSlice({
     },
     getOnePostFailed: (state) => {
       state.onePost.error = true;
-    },
-    unmountPost: (state, action) => {
-      state.allPosts.posts = [];
-    },
-    getAllCommentsSuccess: (state, action) => {
-      state.allPosts.comments = action.payload;
-    },
-    getAllPostFailed: (state) => {
-      state.allPosts.pending = false;
-      state.allPosts.error = true;
-    },
-    getUserPostStart: (state) => {
-      state.userPost.pending = true;
-    },
-    getUserPostSuccess: (state, action) => {
-      state.userPost.pending = false;
-      state.userPost.posts = action.payload;
-    },
-
-    getUserPostFailed: (state) => {
-      state.userPost.pending = false;
-      state.userPost.error = true;
     },
     createPostStart: (state) => {
       state.createPost.pending = true;
@@ -124,11 +106,6 @@ export const {
   getOnePostStart,
   getOnePostSuccess,
   getOnePostFailed,
-  unmountPost,
-  getAllCommentsSuccess,
-  getUserPostStart,
-  getUserPostSuccess,
-  getUserPostFailed,
   deletePostStart,
   deletePostFailed,
   deletePostSuccess,

@@ -74,12 +74,16 @@ const Login = () => {
                     error.substr(50).replace("to be unique", "already existed")}
                 </p> */}
                 <Typography marginTop={2}>
-                  <Link  style={{ textDecoration: "none", color: "unset" }} to="/forgotPassword">Forgot password?</Link>
+                  <Link
+                    style={{ textDecoration: "none", color: "unset" }}
+                    to="/forgotPassword"
+                  >
+                    Forgot password?
+                  </Link>
                 </Typography>
               </Grid>
-              
+
               <Grid item>
-                
                 <Button
                   color="primary"
                   variant="contained"

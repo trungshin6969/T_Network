@@ -7,7 +7,7 @@ export const createPost = async (req, res) => {
     const users = await User.findById(req.body.userId);
     if (req.body.img) {
       const result = await cloudinary.uploader.upload(req.body.img, {
-        folder: "home",
+        upload_preset: "network_library",
       });
       const createPost = {
         ...req.body,
@@ -142,5 +142,29 @@ export const unLikePost = async (req, res) => {
     }
   } catch (err) {
     return res.status(500).json(err);
+  }
+};
+
+export const createComment = async (req, res) => {
+  try {
+      const { postId, content, postUserId } = req.body;
+      const post = await Post.findById(postId);
+      if (post) {
+        const newComment = new Comments({
+            user: req.user.id, content, postUserId, postId
+        });
+
+        await Post.findOneAndUpdate({_id: postId}, {
+            $push: {comments: newComment.id}
+        }, {new: true});
+
+        const savedComment = await newComment.save();
+
+        res.status(200).json(savedComment);
+      } else {
+        return res.status(400).json("This post does not exist.");
+      }  
+  } catch (err) {
+      return res.status(500).json(err)
   }
 };

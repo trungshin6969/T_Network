@@ -9,6 +9,7 @@ import {
   getAllPosts,
   likePost,
   unLikePost,
+  createComment
 } from "../controllers/post";
 import Post from "../models/post";
 import {
@@ -47,6 +48,34 @@ export function postRouter() {
 
   //GET ALL POSTS
   router.get("/", verifyToken, paginatedResult(Post), getAllPosts);
+
+  //CREATE A COMMENT
+  router.post(
+    "/comment/:id",
+    verifyToken,
+    createComment
+  );
+
+  //GET ALL COMMENTS
+  // router.get(
+  //   "/comments",
+  //   verifyToken,
+  //   getAllComments
+  // );
+
+  //GET ALL COMMENTS IN A POST
+  // router.get(
+  //   "/comment/:id",
+  //   verifyToken,
+  //   getCommentsInPost
+  // );
+
+  //DELETE A COMMENT
+  // router.delete(
+  //   "/comment/:id",
+  //   commentAuthorization,
+  //   deleteComment
+  // );
 
   return router;
 }
